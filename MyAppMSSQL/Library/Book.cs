@@ -6,15 +6,15 @@ namespace MyAppMSSQL.Library
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public double Date { get; set; }
+        public DateTime Date { get; set; }
         //Автор книги
         public string Autor { get; set; } = string.Empty;
         //Жанр
         public string Genre { get; set; } = string.Empty;
 
         // Внешний ключ
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         // Навигационное свойство
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

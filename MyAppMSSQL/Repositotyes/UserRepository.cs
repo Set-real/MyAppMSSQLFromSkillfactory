@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using MyAppMSSQL.Library;
 
 namespace MyAppMSSQL.Repositotyes
@@ -15,7 +16,7 @@ namespace MyAppMSSQL.Repositotyes
         /// <param name="email"></param>
         public void CreateUser(string name, string email)
         {
-            using(var db = new ApplicatuonContext())
+            using(var db = new ApplicationContext())
             {
                 var user = new User { Name = name, Email = email };
 
@@ -30,7 +31,7 @@ namespace MyAppMSSQL.Repositotyes
         /// <param name="name"></param>
         public void DelUser(string name)
         {
-            using(var db =new ApplicatuonContext())
+            using(var db =new ApplicationContext())
             {
                 db.Remove(name);
 
@@ -43,7 +44,7 @@ namespace MyAppMSSQL.Repositotyes
         /// <param name="id"></param>
         public void UserChoice(int id)
         {
-            using (var db = new ApplicatuonContext()) 
+            using (var db = new ApplicationContext()) 
             { 
                 var user = db.Users.SingleOrDefault(x => x.Id == id);
             }
@@ -53,7 +54,7 @@ namespace MyAppMSSQL.Repositotyes
         /// </summary>
         public void SelectAllObjects()
         {
-            using(var db = new ApplicatuonContext())
+            using(var db = new ApplicationContext())
             {
                 var allUsersId = db.Users.ToList();
             }
@@ -64,7 +65,7 @@ namespace MyAppMSSQL.Repositotyes
         /// <param name="id"></param>
         public void UsernameUpdate(int id)
         {
-            using(var db = new ApplicatuonContext())
+            using(var db = new ApplicationContext())
             {
                 var user = db.Users.SingleOrDefault(x => x.Id == id);
 
@@ -89,7 +90,7 @@ namespace MyAppMSSQL.Repositotyes
         /// <param name="user"></param>
         public void Books(string title, User user)
         {
-            using(var db = new ApplicatuonContext())
+            using(var db = new ApplicationContext())
             {
                 var book = db.Books.Select(x => x.Title).Contains(title).ToString();
 
@@ -101,6 +102,35 @@ namespace MyAppMSSQL.Repositotyes
                 {
                     Console.WriteLine("Книга не найдена");
                 }
+            }
+        }
+        /// <summary>
+        /// Получать булевый флаг о том, есть ли определенная книга на руках у пользователя.
+        /// </summary>
+        /// <param name="title"></param>
+        public void BoolBookInHand(string title)
+        {
+            using(var db = new ApplicationContext())
+            {
+                var resalt = db.Users.Select(x => x.BooksInHand == title).Contains(true).ToString();
+
+                if (resalt != null)
+                {
+                    Console.WriteLine("Книга на руках у пользователя");
+                }
+                else { Console.WriteLine("Книга не найдена"); }
+            }
+        }
+        /// <summary>
+        /// Получать количество книг на руках у пользователя.
+        /// </summary>
+        public void CountBooksInHand(string name)
+        {
+            using(var db = new ApplicationContext())
+            {
+                var resalt = db.Users.Where(x => x.Name == name).Select(x => x.BooksInHand).Count();
+
+                Console.WriteLine($"Книг у пользователя: {resalt}");
             }
         }
     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyAppMSSQL
 {
-    public class ApplicatuonContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
