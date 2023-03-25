@@ -133,5 +133,9 @@ namespace MyAppMSSQL.Repositotyes
                 Console.WriteLine($"Книг у пользователя: {resalt}");
             }
         }
+        public void SSS(string name)
+        {
+            Console.WriteLine(name);
+        }
     }
 }
